@@ -1,0 +1,17 @@
+[Unit]
+Description=Rasp manager service
+After=network.target
+ 
+[Service]
+Type=simple
+User=root
+Group=root
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+ExecStart=/home/rasp-server/rasp-manage-services
+
+[Install]
+WantedBy=multi-user.target
