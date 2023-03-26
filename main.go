@@ -40,6 +40,31 @@ func main() {
 		}
 	})
 
+	app.Get("/:option/series", func(c *fiber.Ctx) error {
+		if c.Params("option") == "rm" {
+			cmd := exec.Command("rm", "-rf", "/home/rasp-server/media/series/Two_and_a_half_men/*")
+			err := cmd.Run()
+			return answerRequest(c, err)
+		} else if c.Params("option") == "mv" {
+			cmd := exec.Command("mv", "/home/qbittorrent/Downloads/*", "/home/rasp-server/media/series/Two_and_a_half_men/")
+			err := cmd.Run()
+			return answerRequest(c, err)
+		} else {
+			return c.SendString("Invalid option")
+		}
+	})
+
+	app.Get("/df", func(c *fiber.Ctx) error {
+		cmd := exec.Command("df", "-h")
+		out, err := cmd.Output()
+
+		if err != nil {
+			return c.SendString(err.Error())
+		}
+
+		return c.SendString(string(out))
+	})
+
 	app.Listen(":3001")
 }
 
