@@ -2,6 +2,7 @@ web:
   build: ..
   ports:
    - "80:80"
+  restart: 'unless-stopped'
   environment:
    - NGINX_HOST=localhost
    - NGINX_PORT=80
